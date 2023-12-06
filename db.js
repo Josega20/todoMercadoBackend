@@ -1,3 +1,4 @@
+//acceso a la base de datos 
 const { Pool } = require("pg");
 
 const pool = new Pool({
