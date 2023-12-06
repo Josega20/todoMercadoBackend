@@ -1,8 +1,8 @@
 -- Crear la base de datos
-CREATE DATABASE MarketPlace;
+CREATE DATABASE market_place;
 
 -- Conectar a la base de datos recién creada
-\c MarketPlace;
+\c market_place;
 
 -- Crear la tabla "usuarios"
 CREATE TABLE usuarios (
