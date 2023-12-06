@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const { pool } = require("../consultas");
 
 const verificarUsuario = async (email, password) => {
     const consulta = "SELECT * FROM usuarios where email = $1";
