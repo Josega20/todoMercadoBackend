@@ -6,7 +6,7 @@ const {
     verificarUsuario,
     obtenerDatosUsuario,
     agregarUsuario,
-  } = require("./consultas.js");
+  } = require("./controller/usuarios.js");
   const{chequearCredenciales, verificarToken,reportarSolicitudes, reportarSolicitudesRegistro} =require ("./middlewares")
   const app = express();
   const PORT = 3000;
