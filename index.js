@@ -1,15 +1,9 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
-
-//esta linea queda comentada para que el servidor se levante sin probelmas
-// const {
-//   verificarUsuario,
-//   obtenerDatosUsuario,
-//   agregarUsuario,
-// } = require("./controller/usuarios.js");
-
-const { chequearCredenciales, verificarToken, reportarSolicitudes, reportarSolicitudesRegistro } = require("./middlewares")
+const { agregarFavorito, eliminarFavorito, obtenerFavoritosUsuario } = require("./controllers/favoritos");
+const { verificarUsuario, obtenerDatosUsuario, agregarUsuario, eliminarUsuario } = require("./controllers/usuarios");
+const { obtenerTodasLasPublicaciones, obtenerPublicacionPorId, crearNuevaPublicacion, borrarPublicacionPorId } = require("./controllers/productos");
 
 const app = express();
 
