@@ -5,4 +5,4 @@ const chequearCredenciales = (req, res, next) => {
     }
     next();
   };
-  module.export= chequearCredenciales;
+  module.exports= chequearCredenciales;

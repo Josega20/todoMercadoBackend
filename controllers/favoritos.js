@@ -3,7 +3,7 @@ const { pool } = require("../db");
 //guardar favoritos 
 //creo que seria asi la sintaxis no la e comprobado
 const agregarFavorito = async (idUsuario, idProducto) => {
-    const agregarFavoritoQuery = "INSERT INTO favoritos (id_usuario, id_producto) VALUES ($1, $2)";
+    const agregarFavoritoQuery = "INSERT INTO favoritos (id_usuario, id_producto) VALUES (DEFAULT,$1, $2)";
     await pool.query(agregarFavoritoQuery, [idUsuario, idProducto]);
   };
   
