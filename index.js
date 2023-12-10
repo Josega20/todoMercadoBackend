@@ -18,6 +18,7 @@ const {
   agregarUsuario,
   deleteUsuario,
   modificarPassword,
+  verificarCorreo,
 } = require("./controllers/usuarios.js");
 const {
   obtenerPublicaciones,
@@ -27,7 +28,7 @@ const {
 app.post("/registro", reportarSolicitudesRegistro, cors(), async (req, res) => {
   try {
     const { nombre, email, password, telefono } = req.body;
-
+    await verificarCorreo(email);
     console.log(req.body);
     await agregarUsuario(nombre, email, password, telefono);
     res.send("Usuario creado con exito");
@@ -123,9 +124,9 @@ app.get("/", cors(), async (req, res) => {
 
 app.post("/publicaciones/:id", cors(), async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     console.log(id);
-    const id_usuario = id
+    const id_usuario = id;
     console.log(id_usuario);
     const { nombre_producto, descripcion, precio, url } = req.body;
 

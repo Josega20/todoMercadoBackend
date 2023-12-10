@@ -13,6 +13,17 @@ const verificarUsuario = async (email, password) => {
     throw { code: 401, message: "Usuario o contraseña incorrecto" };
   }
 };
+
+const verificarCorreo= async (email) => {
+  const consulta = "SELECT * FROM usuarios where email = $1";
+    const {
+    rowCount,      
+  } = await pool.query(consulta, [email]);
+  if (rowCount) {
+    throw { message: "Este correo ya se encuentra registrado" };
+  }
+};
+
 const obtenerDatosUsuario = async (email) => {
   const consulta = "SELECT * FROM usuarios where email = $1";
   const {
@@ -53,4 +64,4 @@ const modificarPassword = async (email,newpassword) => {
   const { rows: [usuarioBorrado], rowCount } = await pool.query(consulta, [newpassword]);
   return usuarioBorrado;
 };
-module.exports = { verificarUsuario, obtenerDatosUsuario, agregarUsuario, deleteUsuario, modificarPassword};
+module.exports = { verificarUsuario, obtenerDatosUsuario, agregarUsuario, deleteUsuario, modificarPassword, verificarCorreo};
