@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "test": "jest --forceExit"
+  },
   "dependencies": {
     "-": "^0.0.1",
     "bcryptjs": "^2.4.3",
