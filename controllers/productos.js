@@ -19,8 +19,9 @@ const obtenerPublicacionPorId = async (idProducto) => {
 //crear una nueva publicacion
 const crearNuevaPublicacion = async (nombreProducto, descripcion, precio, idUsuario, url) => {
     const consulta = "INSERT INTO productos  VALUES (default,$1, $2, $3, $4, $5)";
-    console.log()
+    
     const values = [nombreProducto, descripcion, precio, idUsuario, url]
+    console.log(values)
     const { rows: [nuevaPublicacion] } = await pool.query(consulta, values);
     return nuevaPublicacion;
 };

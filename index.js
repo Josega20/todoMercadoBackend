@@ -123,7 +123,9 @@ app.get("/", cors(), async (req, res) => {
 
 app.post("/publicaciones/:id", cors(), async (req, res) => {
   try {
-    const id_usuario = req.params;
+    const {id} = req.params;
+    console.log(id);
+    const id_usuario = id
     console.log(id_usuario);
     const { nombre_producto, descripcion, precio, url } = req.body;
 
