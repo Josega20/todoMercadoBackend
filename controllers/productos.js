@@ -2,8 +2,9 @@
 const { pool } = require("../db")
 
 //obtener todas la publicaciones
-const obtenerTodasLasPublicaciones = async () => {
-    const consulta = "SELECT id_producto, nombre_producto, precio, id_usuario, url FROM productos";
+const obtenerPublicaciones = async () => {
+    const consulta = "SELECT * FROM productos";
+    console.log(consulta)
     const { rows: publicaciones, rowCount } = await pool.query(consulta);
     return publicaciones;
 };
@@ -17,8 +18,10 @@ const obtenerPublicacionPorId = async (idProducto) => {
 
 //crear una nueva publicacion
 const crearNuevaPublicacion = async (nombreProducto, descripcion, precio, idUsuario, url) => {
-    const consulta = "INSERT INTO productos (nombre_producto, descripcion, precio, id_usuario, url) VALUES ($1, $2, $3, $4, $5)";
-    const { rows: [nuevaPublicacion] } = await pool.query(consulta, [nombreProducto, descripcion, precio, idUsuario, url]);
+    const consulta = "INSERT INTO productos  VALUES (default,$1, $2, $3, $4, $5)";
+    console.log()
+    const values = [nombreProducto, descripcion, precio, idUsuario, url]
+    const { rows: [nuevaPublicacion] } = await pool.query(consulta, values);
     return nuevaPublicacion;
 };
 
@@ -30,7 +33,7 @@ const borrarPublicacionPorId = async (idProducto) => {
 };
 
 module.exports = {
-    obtenerTodasLasPublicaciones,
+    obtenerPublicaciones,
     obtenerPublicacionPorId,
     crearNuevaPublicacion,
     borrarPublicacionPorId

@@ -3,9 +3,9 @@ const { pool } = require("../db")
 
 const verificarUsuario = async (email, password) => {
   const consulta = "SELECT * FROM usuarios where email = $1";
-  const {
+    const {
     rows: [usuario],
-    rowCount,
+    rowCount,      
   } = await pool.query(consulta, [email]);
   const { password: passwordEncriptada } = usuario;
   const passwordCorrecta = bcrypt.compareSync(password, passwordEncriptada);
@@ -37,10 +37,20 @@ const agregarUsuario = async (nombre, email, password, telefono) => {
 } catch (error) {
     console.error("Error during user insertion:", error);
     throw error;
-}
+}};
 
- // console.log(consulta);
-  //await pool.query(consulta, values);
+const deleteUsuario = async (email) => {
+  const consulta = "DELETE FROM usuarios WHERE email = $1";
+  console.log(email)
+  const { rows: [usuarioBorrado], rowCount } = await pool.query(consulta, [email]);
+  return usuarioBorrado;
 };
 
-module.exports = { verificarUsuario, obtenerDatosUsuario, agregarUsuario };
+const modificarPassword = async (email,newpassword) => {
+
+  const consulta = "UPDATE password FROM usuarios WHERE email = $1";
+  console.log(email)
+  const { rows: [usuarioBorrado], rowCount } = await pool.query(consulta, [newpassword]);
+  return usuarioBorrado;
+};
+module.exports = { verificarUsuario, obtenerDatosUsuario, agregarUsuario, deleteUsuario, modificarPassword};
