@@ -57,11 +57,19 @@ const deleteUsuario = async (email) => {
   return usuarioBorrado;
 };
 
-const modificarPassword = async (email,newpassword) => {
-
-  const consulta = "UPDATE password FROM usuarios WHERE email = $1";
+const modificarPassword = async (email,newPassword) => {
+  
+  const passwordEncriptada = bcrypt.hashSync(newPassword);
+  console.log(passwordEncriptada);
+  const values = [email, passwordEncriptada];
+  const consulta = 'UPDATE usuarios SET password = $2 WHERE email = $1'
   console.log(email)
-  const { rows: [usuarioBorrado], rowCount } = await pool.query(consulta, [newpassword]);
-  return usuarioBorrado;
-};
+  try {
+    await pool.query(consulta, values);
+} catch (error) {
+    console.error("Error during user insertion:", error);
+    throw error;
+}};
+  
+
 module.exports = { verificarUsuario, obtenerDatosUsuario, agregarUsuario, deleteUsuario, modificarPassword, verificarCorreo};

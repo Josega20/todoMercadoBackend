@@ -33,9 +33,19 @@ const borrarPublicacionPorId = async (idProducto) => {
     return publicacionBorrada;
 };
 
+//modificar publicacion
+const modificarPublicacion = async (nombreProducto, descripcion, precio,url) => {
+    const consulta = "UPDATE productos  SET nombre_producto=$1, descripcion=$2, precio=$3, url= $4)";
+    
+    const values = [nombreProducto, descripcion, precio, url]
+    console.log(values)
+    const { rows: [Publicacion] } = await pool.query(consulta, values);
+    return Publicacion;
+};
 module.exports = {
     obtenerPublicaciones,
     obtenerPublicacionPorId,
     crearNuevaPublicacion,
-    borrarPublicacionPorId
+    borrarPublicacionPorId,
+    modificarPublicacion
 };
