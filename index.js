@@ -112,7 +112,7 @@ app.get("/", cors(), async (req, res) => {
   }
 });
 //agregar publicacion nueva
-app.post("/publicaciones/:id", cors(), async (req, res) => {
+app.post("/nuevaPublicacion", cors(), async (req, res) => {
   try {
     const { id } = req.params;
     console.log(id);
