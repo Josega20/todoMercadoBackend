@@ -114,11 +114,7 @@ app.get("/", cors(), async (req, res) => {
 //agregar publicacion nueva
 app.post("/nuevaPublicacion", cors(), async (req, res) => {
   try {
-    const { id } = req.params;
-    console.log(id);
-    const id_usuario = id;
-    console.log(id_usuario);
-    const { nombre_producto, descripcion, precio, url } = req.body;
+    const { nombre_producto, descripcion, precio, id_usuario, url } = req.body;
 
     console.log(req.body);
     await crearNuevaPublicacion(
