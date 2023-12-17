@@ -9,6 +9,13 @@ const obtenerPublicaciones = async () => {
     return publicaciones;
 };
 
+//ver todas las publicaciones del usuario
+const obtenerPublicacionUsuario = async (id_usuario) => {
+    const consulta = "SELECT * FROM productos WHERE id_usuario = $1;";
+    const { rows: [publicacion], rowCount } = await pool.query(consulta, [id_usuario]);
+    return publicacion;
+};
+
 //ver la descrpcion de una publicacion
 const obtenerPublicacionPorId = async (idProducto) => {
     const consulta = "SELECT * FROM productos WHERE id_producto = $1";
@@ -19,7 +26,7 @@ const obtenerPublicacionPorId = async (idProducto) => {
 //crear una nueva publicacion
 const crearNuevaPublicacion = async (nombreProducto, descripcion, precio, idUsuario, url) => {
     const consulta = "INSERT INTO productos  VALUES (default,$1, $2, $3, $4, $5)";
-    
+
     const values = [nombreProducto, descripcion, precio, idUsuario, url]
     console.log(values)
     const { rows: [nuevaPublicacion] } = await pool.query(consulta, values);
@@ -34,9 +41,9 @@ const borrarPublicacionPorId = async (idProducto) => {
 };
 
 //modificar publicacion
-const modificarPublicacion = async (nombreProducto, descripcion, precio,url) => {
+const modificarPublicacion = async (nombreProducto, descripcion, precio, url) => {
     const consulta = "UPDATE productos  SET nombre_producto=$1, descripcion=$2, precio=$3, url= $4)";
-    
+
     const values = [nombreProducto, descripcion, precio, url]
     console.log(values)
     const { rows: [Publicacion] } = await pool.query(consulta, values);
@@ -47,5 +54,6 @@ module.exports = {
     obtenerPublicacionPorId,
     crearNuevaPublicacion,
     borrarPublicacionPorId,
-    modificarPublicacion
+    modificarPublicacion,
+    obtenerPublicacionUsuario
 };
