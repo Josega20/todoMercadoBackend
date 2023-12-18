@@ -12,7 +12,7 @@ const obtenerPublicaciones = async () => {
 //ver todas las publicaciones del usuario
 const obtenerPublicacionUsuario = async (id_usuario) => {
     const consulta = "SELECT * FROM productos WHERE id_usuario = $1;";
-    const { rows: [publicacion], rowCount } = await pool.query(consulta, [id_usuario]);
+    const { rows: publicacion, rowCount } = await pool.query(consulta, [id_usuario]);
     return publicacion;
 };
 
