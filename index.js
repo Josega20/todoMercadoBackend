@@ -89,6 +89,7 @@ app.delete("/perfil", verificarToken, cors(), async (req, res) => {
         console.log("no es posible ejecutar el requerimiento");
     }
 });
+
 app.patch('/perfil', async (req, res) => {
     try {
         console.log("aqui");
@@ -106,7 +107,9 @@ app.patch('/perfil', async (req, res) => {
 // productos vista home
 app.get("/", cors(), async (req, res) => {
     try {
-        const productos = await obtenerPublicaciones();
+        const {limits,campo,order,page} =req.query
+        console.log(order)
+        const productos = await obtenerPublicaciones({limits,campo,order,page});
         res.send(productos);
     } catch (error) {
         res.status(500).send(error);
@@ -114,7 +117,6 @@ app.get("/", cors(), async (req, res) => {
     }
 });
 
-// mis publicaciones
 app.post("/misPublicaciones", cors(), async (req, res) => {
     try {
         const id_usuario = req.body.id_usuario;
@@ -158,7 +160,7 @@ app.get("/publicacionDetalle/:id", cors(), async (req, res) => {
 });
 
 //borrar publicacion
-app.delete("/publicaciones/:id", cors(), async (req, res) => {
+app.delete("/mispublicaciones/:id", cors(), async (req, res) => {
     try {
         const { id } = req.params
         console.log(id)
@@ -171,7 +173,7 @@ app.delete("/publicaciones/:id", cors(), async (req, res) => {
 });
 
 //editar publicacion
-app.put("/publicaciones/:id", cors(), async (req, res) => {
+app.put("/mispublicaciones/:id", cors(), async (req, res) => {
     try {
         const { nombreProducto, descripcion, precio, url } = req.body
         console.log(id)
