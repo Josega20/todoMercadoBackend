@@ -74,7 +74,7 @@ const modificarPublicacion = async (
   url
 ) => {
   const consulta =
-    "UPDATE productos  SET nombre_producto=$1, descripcion=$2, precio=$3, url= $4)";
+    "UPDATE productos  SET nombre_producto=$1, descripcion=$2, precio=$3, url= $4";
 
   const values = [nombreProducto, descripcion, precio, url];
   console.log(values);
