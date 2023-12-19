@@ -28,6 +28,16 @@ const obtenerPublicacionPorId = async (idProducto) => {
   return publicacion;
 };
 
+//Obtiene las publicaciones del usuario
+const obtenerPublicacionUsuario = async (id_usuario) => {
+    const consulta = "SELECT * FROM productos WHERE id_usuario = $1";
+    const {
+      rows: publicacion,
+      rowCount,
+    } = await pool.query(consulta, [id_usuario]);
+    return publicacion;
+  };
+
 //crear una nueva publicacion
 const crearNuevaPublicacion = async (
   nombreProducto,
@@ -96,6 +106,7 @@ const obtenerProductoFiltros = async ({ precio_max, precio_min }) => {
 module.exports = {
   obtenerPublicaciones,
   obtenerPublicacionPorId,
+  obtenerPublicacionUsuario,
   crearNuevaPublicacion,
   borrarPublicacionPorId,
   modificarPublicacion,

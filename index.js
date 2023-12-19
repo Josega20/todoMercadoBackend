@@ -117,9 +117,11 @@ app.get("/", cors(), async (req, res) => {
     }
 });
 
+//Obtien las publicaciones del usuario
 app.post("/misPublicaciones", cors(), async (req, res) => {
     try {
         const id_usuario = req.body.id_usuario;
+        console.log(`el id ${id_usuario} se obtiene`)
         const productos = await obtenerPublicacionUsuario(id_usuario);
         res.send(productos);
     } catch (error) {
