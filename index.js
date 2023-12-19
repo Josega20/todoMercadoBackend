@@ -23,7 +23,7 @@ const {
 const {
     obtenerPublicacionUsuario,
     obtenerPublicaciones,
-    crearNuevaPublicacion, obtenerPublicacionPorId, borrarPublicacionPorId, modificarPublicacion
+    crearNuevaPublicacion, obtenerPublicacionPorId, borrarPublicacionPorId, modificarPublicacion,getpublicacionesByFiltros,
 } = require("./controllers/productos");
 
 app.post("/registro", cors(), async (req, res) => {
@@ -116,6 +116,19 @@ app.get("/", cors(), async (req, res) => {
         console.log("no es posible ejecutar el requerimiento");
     }
 });
+
+//productos filtrados
+
+app.get("/filtros", async (req, res) => {
+    try {
+      const queryStrings = req.query;
+      console.log(req.query);
+      const productos = await getpublicacionesByFiltros(queryStrings);
+      res.send(productos);
+    } catch (error) {
+      res.status(500).json(error.message);
+    }
+  });
 
 //Obtien las publicaciones del usuario
 app.post("/misPublicaciones", cors(), async (req, res) => {

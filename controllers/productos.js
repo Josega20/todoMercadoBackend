@@ -4,7 +4,7 @@ const { pool } = require("../db");
 //obtener todas la publicaciones
 const obtenerPublicaciones = async ({
   limits = 8,
-  campo = "id_producto",
+  campo = "id_publicacion",
   orden="ASC",
   page = 1,
 }) => {
@@ -17,6 +17,34 @@ console.log(campo);
   console.log(productos);
   return productos;
 };
+
+
+//filtrar publicaciones
+const getpublicacionesByFiltros = async ({
+  precio_max,
+  precio_min,
+  nombreProducto,
+}) => {
+  let filtros = [];
+  const values = [];
+  const agregarFiltro = (campo, comparador, valor) => {
+    values.push(valor);
+    const { length } = filtros;
+    filtros.push(`${campo} ${comparador} $${length + 1}`);
+  };
+  if (precio_max) agregarFiltro("precio", "<=", precio_max);
+  if (precio_min) agregarFiltro("precio", ">=", precio_min);
+  if (nombreProducto) agregarFiltro("nombre", ">=", nombreProducto);
+  let consulta = "SELECT * FROM productos";
+  if (filtros.length > 0) {
+    filtros = filtros.join(" AND ");
+    consulta += ` WHERE ${filtros}`;
+  }
+  const { rows: productos } = await pool.query(consulta, values);
+  return productos;
+};
+
+
 
 //ver la descrpcion de una publicacion
 const obtenerPublicacionPorId = async (idProducto) => {
@@ -84,25 +112,7 @@ const modificarPublicacion = async (
   return Publicacion;
 };
 
-//filtrar busqueda
-const obtenerProductoFiltros = async ({ precio_max, precio_min }) => {
-  let filtros = [];
-  const values = [];
-  const agregarFiltro = (campo, comparador, valor) => {
-    values.push(valor);
-    const { length } = filtros;
-    filtros.push(`${campo} ${comparador} $${length + 1}`);
-  };
-  if (precio_max) agregarFiltro("precio", "<=", precio_max);
-  if (precio_min) agregarFiltro("precio", ">=", precio_min);
-  let consulta = "SELECT * FROM productos";
-  if (filtros.length > 0) {
-    filtros = filtros.join(" AND ");
-    consulta += ` WHERE ${filtros}`;
-  }
-  const { rows: productos } = await pool.query(consulta, values);
-  return productos;
-};
+
 module.exports = {
   obtenerPublicaciones,
   obtenerPublicacionPorId,
@@ -110,5 +120,6 @@ module.exports = {
   crearNuevaPublicacion,
   borrarPublicacionPorId,
   modificarPublicacion,
-  obtenerProductoFiltros,
+ // obtenerProductoFiltros,
+  getpublicacionesByFiltros,
 };
