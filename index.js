@@ -203,10 +203,10 @@ app.put("/editarPublicacion", cors(), async (req, res) => {
 });
 
 //guardar favorito
-app.post('/favoritos', async (req, res) => {
+app.post('/favoritos', cors(), async (req, res) => {
     const { id_usuario, id_producto } = req.body;
     console.log(`producto: ${id_producto} usuario: ${id_usuario}`);
-    const favorito = await agregarFavorito(id_producto, id_usuario);
+    const favorito = await agregarFavorito(id_usuario,id_producto);
     res.send(favorito)
 });
 
@@ -214,6 +214,6 @@ app.post('/favoritos', async (req, res) => {
 app.delete('/favoritos', async (req, res) => {
     const { id_usuario, id_producto } = req.body;
     console.log(`producto: ${id_producto} usuario: ${id_usuario}`);
-    const favorito = await eliminarFavorito(id_producto, id_usuario);
+    const favorito = await eliminarFavorito(id_usuario,id_producto);
     res.send(favorito)
 });
