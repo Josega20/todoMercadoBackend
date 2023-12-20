@@ -190,11 +190,11 @@ app.delete("/mispublicaciones/:id", cors(), async (req, res) => {
 });
 
 //editar publicacion
-app.put("/mispublicaciones/:id", cors(), async (req, res) => {
+app.put("/editarPublicacion", cors(), async (req, res) => {
     try {
-        const { nombreProducto, descripcion, precio, url } = req.body
+        const { nombre_producto, descripcion, precio, url, id } = req.body
         console.log(id)
-        const productos = await modificarPublicacion(nombreProducto, descripcion, precio, url);
+        const productos = await modificarPublicacion(nombre_producto, descripcion, precio, url, id);
         res.send(productos);
     } catch (error) {
         res.status(500).send(error);
