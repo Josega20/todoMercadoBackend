@@ -25,7 +25,9 @@ const {
     obtenerPublicaciones,
     crearNuevaPublicacion, obtenerPublicacionPorId, borrarPublicacionPorId, modificarPublicacion,getpublicacionesByFiltros,
 } = require("./controllers/productos");
-
+const { agregarFavorito,
+    eliminarFavorito,
+    obtenerFavoritosUsuario } = require("./controllers/favoritos.js")
 app.post("/registro", cors(), async (req, res) => {
     try {
         const { nombre, email, password, telefono } = req.body;
@@ -107,9 +109,9 @@ app.patch('/perfil', async (req, res) => {
 // productos vista home
 app.get("/", cors(), async (req, res) => {
     try {
-        const {limits,campo,order,page} =req.query
+        const { limits, campo, order, page } = req.query
         console.log(order)
-        const productos = await obtenerPublicaciones({limits,campo,order,page});
+        const productos = await obtenerPublicaciones({ limits, campo, order, page });
         res.send(productos);
     } catch (error) {
         res.status(500).send(error);
@@ -198,4 +200,20 @@ app.put("/mispublicaciones/:id", cors(), async (req, res) => {
         res.status(500).send(error);
         console.log("no es posible ejecutar el requerimiento");
     }
+});
+
+//guardar favorito
+app.post('/favoritos', async (req, res) => {
+    const { id_usuario, id_producto } = req.body;
+    console.log(`producto: ${id_producto} usuario: ${id_usuario}`);
+    const favorito = await agregarFavorito(id_producto, id_usuario);
+    res.send(favorito)
+});
+
+//eliminar favorito
+app.delete('/favoritos', async (req, res) => {
+    const { id_usuario, id_producto } = req.body;
+    console.log(`producto: ${id_producto} usuario: ${id_usuario}`);
+    const favorito = await eliminarFavorito(id_producto, id_usuario);
+    res.send(favorito)
 });
