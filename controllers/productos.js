@@ -9,11 +9,11 @@ const obtenerPublicaciones = async ({
     page = 1,
 }) => {
     const offset = (page - 1) * limits;
-    console.log(campo);
+    // console.log(campo);
     let consulta = `SELECT * FROM productos ORDER BY ${campo}  ${orden} LIMIT $1 OFFSET ${offset}`;
-    console.log(consulta);
+    // console.log(consulta);
     const { rows: productos, rowCount } = await pool.query(consulta, [limits]);
-    console.log(productos);
+    // console.log(productos);
     return productos;
 };
 

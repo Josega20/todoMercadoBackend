@@ -23,7 +23,7 @@ const {
 const {
     obtenerPublicacionUsuario,
     obtenerPublicaciones,
-    crearNuevaPublicacion, obtenerPublicacionPorId, borrarPublicacionPorId, modificarPublicacion,getpublicacionesByFiltros,
+    crearNuevaPublicacion, obtenerPublicacionPorId, borrarPublicacionPorId, modificarPublicacion, getpublicacionesByFiltros,
 } = require("./controllers/productos");
 const { agregarFavorito,
     eliminarFavorito,
@@ -123,20 +123,20 @@ app.get("/", cors(), async (req, res) => {
 
 app.get("/filtros", async (req, res) => {
     try {
-      const queryStrings = req.query;
-      console.log(req.query);
-      const productos = await getpublicacionesByFiltros(queryStrings);
-      res.send(productos);
+        const queryStrings = req.query;
+        console.log(req.query);
+        const productos = await getpublicacionesByFiltros(queryStrings);
+        res.send(productos);
     } catch (error) {
-      res.status(500).json(error.message);
+        res.status(500).json(error.message);
     }
-  });
+});
 
 //Obtien las publicaciones del usuario
 app.post("/misPublicaciones", cors(), async (req, res) => {
     try {
         const id_usuario = req.body.id_usuario;
-        console.log(`el id ${id_usuario} se obtiene`)
+        // console.log(`el id ${id_usuario} se obtiene`)
         const productos = await obtenerPublicacionUsuario(id_usuario);
         res.send(productos);
     } catch (error) {
@@ -206,7 +206,7 @@ app.put("/editarPublicacion", cors(), async (req, res) => {
 app.post('/favoritos', cors(), async (req, res) => {
     const { id_usuario, id_producto } = req.body;
     console.log(`producto: ${id_producto} usuario: ${id_usuario}`);
-    const favorito = await agregarFavorito(id_usuario,id_producto);
+    const favorito = await agregarFavorito(id_usuario, id_producto);
     res.send(favorito)
 });
 
@@ -214,6 +214,26 @@ app.post('/favoritos', cors(), async (req, res) => {
 app.delete('/favoritos', async (req, res) => {
     const { id_usuario, id_producto } = req.body;
     console.log(`producto: ${id_producto} usuario: ${id_usuario}`);
-    const favorito = await eliminarFavorito(id_usuario,id_producto);
+    const favorito = await eliminarFavorito(id_usuario, id_producto);
     res.send(favorito)
+});
+
+// Ruta para obtener favoritos de un usuario
+app.post('/favoritosusuario', async (req, res) => {
+    try {
+        const { id_usuario } = req.body;
+        // console.log(id_usuario)
+        const favoritos = await obtenerFavoritosUsuario(id_usuario);
+        // console.log('Favoritos obtenidos:', favoritos.length);
+        if (favoritos.length === 0) {
+            // No se encontraron favoritos, enviar un mensaje de aviso
+            res.json({ mensaje: 'No se encontraron favoritos para el usuario.' });
+        } else {
+            // Se encontraron favoritos, enviar los favoritos al cliente
+            res.json({ favoritos });
+        }
+    } catch (error) {
+        console.error('Error al obtener favoritos del usuario:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 });
