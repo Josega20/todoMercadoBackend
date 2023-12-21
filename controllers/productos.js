@@ -47,7 +47,11 @@ const getpublicacionesByFiltros = async ({
 
 //ver la descrpcion de una publicacion
 const obtenerPublicacionPorId = async (idProducto) => {
-    const consulta = "SELECT * FROM productos WHERE id_producto = $1";
+    //const consulta = "SELECT * FROM productos WHERE id_producto = $1";//falta telefono
+    const consulta = "SELECT id_producto, nombre_producto, descripcion, precio, url, email, telefono FROM productos left JOIN usuarios ON productos.id_usuario = usuarios.id_usuario WHERE id_producto = $1";//falta telefono
+    
+    //const consulta= "SELECT  id_producto, nombre_producto, descripcion, precio, url,email, telefono  FROM productos left JOIN usuarios ON productos.id_usuario = usuarios.id_usuario where id_producto=$1"
+
     const {
         rows: [publicacion],
         rowCount,
