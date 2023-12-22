@@ -27,7 +27,8 @@ const {
 } = require("./controllers/productos");
 const { agregarFavorito,
     eliminarFavorito,
-    obtenerFavoritosUsuario } = require("./controllers/favoritos.js")
+    obtenerFavoritosUsuario,
+    obtenerPublicacionesFavoritas } = require("./controllers/favoritos.js")
 app.post("/registro", cors(), async (req, res) => {
     try {
         const { nombre, email, password, telefono } = req.body;
@@ -205,15 +206,15 @@ app.put("/editarPublicacion", cors(), async (req, res) => {
 //guardar favorito
 app.post('/favoritos', cors(), async (req, res) => {
     const { id_usuario, id_producto } = req.body;
-    console.log(`producto: ${id_producto} usuario: ${id_usuario}`);
+    // console.log(`producto: ${id_producto} usuario: ${id_usuario}`);
     const favorito = await agregarFavorito(id_usuario, id_producto);
     res.send(favorito)
 });
 
 //eliminar favorito
-app.delete('/favoritos', async (req, res) => {
-    const { id_usuario, id_producto } = req.body;
-    console.log(`producto: ${id_producto} usuario: ${id_usuario}`);
+app.delete('/favoritos/:id_usuario/:id_producto', async (req, res) => {
+    const { id_usuario, id_producto } = req.params;
+    // console.log(`producto: ${id_producto} usuario: ${id_usuario}`);
     const favorito = await eliminarFavorito(id_usuario, id_producto);
     res.send(favorito)
 });
@@ -235,5 +236,17 @@ app.post('/favoritosusuario', async (req, res) => {
     } catch (error) {
         console.error('Error al obtener favoritos del usuario:', error);
         res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+//publicaciones favoritas de lusuario
+app.get("/favoritos", cors(), async (req, res) => {
+    try {
+        const { id_usuario } = req.query
+        const productos = await obtenerPublicacionesFavoritas( id_usuario );
+        res.send(productos);
+    } catch (error) {
+        res.status(500).send(error);
+        console.log("no es posible ejecutar el requerimiento");
     }
 });

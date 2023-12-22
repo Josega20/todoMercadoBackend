@@ -13,9 +13,9 @@ const agregarFavorito = async (id_usuario, id_producto) => {
 
 //eliminar favoritos
 const eliminarFavorito = async (id_usuario, id_producto) => {
-  const eliminarFavoritoQuery =
+  const consulta =
     "DELETE FROM favoritos WHERE id_usuario = $1 AND id_producto = $2";
-  const { rowCount } = await pool.query(eliminarFavoritoQuery, [
+  const { rowCount } = await pool.query(consulta, [
     id_usuario,
     id_producto,
   ]);
@@ -43,7 +43,7 @@ const obtenerFavoritosUsuario = async (id_usuario) => {
 //obtiene publicaciones favoritas del usuario
 const obtenerPublicacionesFavoritas = async (id_usuario) => {
   const consulta = `
-  SELECT productos *
+  SELECT *
   FROM productos
   INNER JOIN favoritos ON productos.id_producto = favoritos.id_producto
   WHERE favoritos.id_usuario = $1;`;
@@ -59,4 +59,5 @@ module.exports = {
   agregarFavorito,
   eliminarFavorito,
   obtenerFavoritosUsuario,
+  obtenerPublicacionesFavoritas
 };
