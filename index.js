@@ -29,6 +29,8 @@ const { agregarFavorito,
     eliminarFavorito,
     obtenerFavoritosUsuario,
     obtenerPublicacionesFavoritas } = require("./controllers/favoritos.js")
+
+
 app.post("/registro", cors(), async (req, res) => {
     try {
         const { nombre, email, password, telefono } = req.body;
@@ -178,11 +180,11 @@ app.get("/publicacionDetalle/:id", cors(), async (req, res) => {
 });
 
 //borrar publicacion
-app.delete("/mispublicaciones/:id", cors(), async (req, res) => {
+app.delete("/mispublicaciones/:id_producto", cors(), async (req, res) => {
     try {
-        const { id } = req.params
-        console.log(id)
-        const productos = await borrarPublicacionPorId(id);
+        const { id_producto } = req.params;
+        console.log(id_producto)
+        const productos = await borrarPublicacionPorId(id_producto);
         res.send(productos);
     } catch (error) {
         res.status(500).send(error);

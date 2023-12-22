@@ -88,12 +88,12 @@ const crearNuevaPublicacion = async (
 };
 
 //borrar una publicacion
-const borrarPublicacionPorId = async (idProducto) => {
+const borrarPublicacionPorId = async (id_producto) => {
     const consulta = "DELETE FROM productos WHERE id_producto = $1";
     const {
         rows: [publicacionBorrada],
         rowCount,
-    } = await pool.query(consulta, [idProducto]);
+    } = await pool.query(consulta, [id_producto]);
     return publicacionBorrada;
 };
 
