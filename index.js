@@ -8,7 +8,7 @@ const {
     reportarSolicitudesRegistro,
 } = require("./middlewares/middlewares");
 const app = express();
-const PORT = 3000;
+const PORT = "https://todomercado.netlify.app/";
 app.listen(PORT, console.log(`¡Servidor ${PORT} encendido!`));
 app.use(express.json());
 app.use(cors());
