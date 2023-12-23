@@ -3,7 +3,7 @@ const { pool } = require("../db");
 
 //obtener todas la publicaciones
 const obtenerPublicaciones = async ({
-    limits = 8,
+    limits = 20,
     campo = "id_producto",
     orden = "ASC",
     page = 1,
