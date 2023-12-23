@@ -36,7 +36,7 @@ const obtenerFavoritosUsuario = async (id_usuario) => {
     return favoritos;
   } catch (error) {
     console.error('Error al obtener favoritos del usuario:', error);
-    throw error; // Re-lanza el error para manejarlo en la parte que llama a esta función.
+    throw error; 
   }
 };
 

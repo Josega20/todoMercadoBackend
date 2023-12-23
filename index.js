@@ -229,10 +229,10 @@ app.post('/favoritosusuario', async (req, res) => {
         const favoritos = await obtenerFavoritosUsuario(id_usuario);
         // console.log('Favoritos obtenidos:', favoritos.length);
         if (favoritos.length === 0) {
-            // No se encontraron favoritos, enviar un mensaje de aviso
+            // No se encontraron favoritos
             res.json({ mensaje: 'No se encontraron favoritos para el usuario.' });
         } else {
-            // Se encontraron favoritos, enviar los favoritos al cliente
+            // Se encontraron favoritos
             res.json({ favoritos });
         }
     } catch (error) {
