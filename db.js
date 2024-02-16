@@ -2,11 +2,11 @@
 const { Pool } = require("pg");
 
 const pool = new Pool({
-  host: "dpg-cm34cjocmk4c73c9qmfg-a",
+  host: "dpg-cn7qjjmn7f5s73c8vo60-a",
   port: 5432,
   user: "admin",
-  password: "EK6pzrqAqthT1tYE5gPMQ5KRLLR88Kxr", //"Knight123"
-  database: "market_place_isof",
+  password: "vV2VrnsRQQcQuFfMSubKI0v1WjuhKUr2", //"Knight123"
+  database: "market_place_zfy4",
   allowExitOnIdle: true,
 });
 
